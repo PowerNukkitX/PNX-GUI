@@ -2,6 +2,7 @@ package cn.powernukkitx.gui.window;
 
 import cn.powernukkitx.gui.scheme.PNXSchemeHandlerFactory;
 import cn.powernukkitx.gui.share.GUIConstant;
+import cn.powernukkitx.gui.util.ResourceUtils;
 import me.friwi.jcefmaven.CefAppBuilder;
 import me.friwi.jcefmaven.CefInitializationException;
 import me.friwi.jcefmaven.MavenCefAppHandlerAdapter;
@@ -13,22 +14,27 @@ import org.cef.browser.CefMessageRouter;
 import org.cef.callback.CefSchemeRegistrar;
 import org.cef.handler.CefDisplayHandlerAdapter;
 import org.cef.handler.CefFocusHandlerAdapter;
+import org.jetbrains.annotations.NotNull;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 public final class MainWindow extends JFrame {
     private final CefApp cefApp;
     private final CefClient client;
-    private final CefBrowser browser;
-    private final Component browserUI;
     private boolean browserFocus = true;
+    private final JTabbedPane tabbedPane;
 
-    public MainWindow(String startURL, boolean useOSR, boolean isTransparent, String[] args) throws UnsupportedPlatformException, CefInitializationException, IOException, InterruptedException {
+    private final LinkedHashMap<Integer, CefIndexPage> indexPageMap = new LinkedHashMap<>();
+
+    public MainWindow(boolean useOSR, String[] args) throws UnsupportedPlatformException, CefInitializationException, IOException, InterruptedException {
         setTitle("PowerNukkitX");
         setIconImage(Toolkit.getDefaultToolkit().createImage(MainWindow.class.getClassLoader().getResource("image/pnx.png")));
 
@@ -63,9 +69,6 @@ public final class MainWindow extends JFrame {
         var msgRouter = CefMessageRouter.create();
         client.addMessageRouter(msgRouter);
 
-        browser = client.createBrowser(startURL, useOSR, isTransparent);
-        browserUI = browser.getUIComponent();
-
         client.addFocusHandler(new CefFocusHandlerAdapter() {
             @Override
             public void onGotFocus(CefBrowser browser) {
@@ -88,7 +91,8 @@ public final class MainWindow extends JFrame {
             }
         });
 
-        getContentPane().add(browserUI);
+        tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+        getContentPane().add(tabbedPane);
         pack();
         setSize(800, 600);
         setVisible(true);
@@ -102,20 +106,20 @@ public final class MainWindow extends JFrame {
         });
     }
 
+    public @NotNull CefIndexPage addIndexPage(String url, String iconPath, String title, String tip) {
+        var page = CefIndexPage.create(url, client);
+        page.setTitle(title);
+        indexPageMap.put(page.id(), page);
+        tabbedPane.addTab(title, ResourceUtils.getIcon(iconPath, 16, 16), page.browserUI(), tip);
+        return page;
+    }
+
     public CefApp getCefApp() {
         return cefApp;
     }
 
     public CefClient getClient() {
         return client;
-    }
-
-    public CefBrowser getBrowser() {
-        return browser;
-    }
-
-    public Component getBrowserUI() {
-        return browserUI;
     }
 
     public boolean isBrowserFocus() {

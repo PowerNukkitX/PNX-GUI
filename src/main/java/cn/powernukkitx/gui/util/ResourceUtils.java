@@ -2,12 +2,17 @@ package cn.powernukkitx.gui.util;
 
 import cn.powernukkitx.gui.Main;
 import cn.powernukkitx.gui.share.GUIConstant;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.jetbrains.annotations.Nullable;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public final class ResourceUtils {
     public static final File devSourceDir;
@@ -44,6 +49,19 @@ public final class ResourceUtils {
         } else {
             System.out.println("Reading " + name + " from bundle.");
             return Main.class.getClassLoader().getResourceAsStream(name);
+        }
+        return null;
+    }
+
+    public static @Nullable Icon getIcon(String iconPath, int width, int height) {
+        try {
+            if (iconPath.endsWith("svg")) {
+                return new FlatSVGIcon(getResource(iconPath)).derive(width, height);
+            } else {
+                return new ImageIcon(ImageIO.read(Objects.requireNonNull(ResourceUtils.getResource(iconPath))).getScaledInstance(width, height, Image.SCALE_AREA_AVERAGING));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
