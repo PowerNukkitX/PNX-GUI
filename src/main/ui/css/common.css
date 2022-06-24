@@ -3,10 +3,17 @@
     --darcula-font-color: rgb(175, 177, 179);
     --darcula-font-color-bright: white;
     --darcula-icon-color: rgb(135, 147, 154);
+    --darcula-line-color: rgb(81, 81, 81);
 }
 
 body {
     background-color: var(--darcula-bg-color);
+}
+
+hr {
+    border: none;
+    height: 2px;
+    background-color: var(--darcula-line-color);
 }
 
 * {

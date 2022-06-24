@@ -16,7 +16,6 @@ import org.cef.handler.CefDisplayHandlerAdapter;
 import org.cef.handler.CefFocusHandlerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -24,7 +23,6 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Objects;
 
 public final class MainWindow extends JFrame {
     private final CefApp cefApp;

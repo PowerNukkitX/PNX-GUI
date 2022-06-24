@@ -14,8 +14,8 @@ public class Main {
         FlatDarculaLaf.setup();
         try {
             mainWindow = new MainWindow(false, new String[0]);
-            mainWindow.addIndexPage("pnx://bundle/html/index.html", "image/welcome.svg", "欢迎", "PNX-GUI欢迎页");
-            mainWindow.addIndexPage("pnx://bundle/html/about.html", "image/about.svg", "关于", "关于PNX-GUI");
+            var welcomeWindow = mainWindow.addIndexPage("pnx://bundle/html/index.html", "image/welcome.svg", "欢迎", "PNX-GUI欢迎页");
+            var aboutWindow = mainWindow.addIndexPage("pnx://bundle/html/about.html", "image/about.svg", "关于", "关于PNX-GUI");
             mainWindow.setVisible(true);
         } catch (UnsupportedPlatformException | CefInitializationException | IOException | InterruptedException e) {
             e.printStackTrace();
