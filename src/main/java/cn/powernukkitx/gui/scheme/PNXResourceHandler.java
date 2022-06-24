@@ -2,6 +2,7 @@ package cn.powernukkitx.gui.scheme;
 
 import cn.powernukkitx.gui.Main;
 import cn.powernukkitx.gui.util.MineTypeUtils;
+import cn.powernukkitx.gui.util.ResourceUtils;
 import org.cef.callback.CefCallback;
 import org.cef.handler.CefResourceHandlerAdapter;
 import org.cef.misc.IntRef;
@@ -39,7 +40,7 @@ public class PNXResourceHandler extends CefResourceHandlerAdapter {
             return false;
         }
 
-        is = Main.class.getClassLoader().getResourceAsStream(url);
+        is = ResourceUtils.getResource(url);
         if (is == null) {
             System.err.println("Resource " + url + " NOT found!");
             return false; //Mhhhhh... 404?

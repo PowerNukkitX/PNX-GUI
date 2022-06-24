@@ -9,14 +9,10 @@ import me.friwi.jcefmaven.UnsupportedPlatformException;
 import org.cef.CefApp;
 import org.cef.CefClient;
 import org.cef.browser.CefBrowser;
-import org.cef.browser.CefFrame;
 import org.cef.browser.CefMessageRouter;
-import org.cef.callback.CefSchemeHandlerFactory;
 import org.cef.callback.CefSchemeRegistrar;
 import org.cef.handler.CefDisplayHandlerAdapter;
 import org.cef.handler.CefFocusHandlerAdapter;
-import org.cef.handler.CefResourceHandler;
-import org.cef.network.CefRequest;
 
 import javax.swing.*;
 import java.awt.*;
