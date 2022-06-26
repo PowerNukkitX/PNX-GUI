@@ -106,9 +106,15 @@ public final class MainWindow extends JFrame {
 
     public @NotNull CefIndexPage addIndexPage(String url, String iconPath, String title, String tip) {
         var page = CefIndexPage.create(url, client);
-        page.setTitle(title);
         indexPageMap.put(page.id(), page);
-        tabbedPane.addTab(title, ResourceUtils.getIcon(iconPath, 16, 16), page.browserUI(), tip);
+        var icon = ResourceUtils.getIcon(iconPath, 16, 16);
+        tabbedPane.addTab(title, icon, page.browserUI(), tip);
+        var index = tabbedPane.indexOfComponent(page.browserUI());
+        page.setTitle(title).setIcon(icon).setCloseListener(self -> {
+            tabbedPane.remove(index);
+            return true;
+        });
+        tabbedPane.setTabComponentAt(index, page.createTabComponent());
         return page;
     }
 

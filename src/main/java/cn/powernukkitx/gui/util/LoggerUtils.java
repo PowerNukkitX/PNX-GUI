@@ -1,9 +1,7 @@
 package cn.powernukkitx.gui.util;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Filter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public final class LoggerUtils {
@@ -17,12 +15,9 @@ public final class LoggerUtils {
             method.setAccessible(true);
             var result = (Logger) method.invoke(null, name, resourceBundle, callerClass);
             result.setLevel(Level.OFF);
-            result.setFilter(new Filter() {
-                @Override
-                public boolean isLoggable(LogRecord record) {
-                    System.out.println(record.getMessage());
-                    return false;
-                }
+            result.setFilter(record -> {
+                System.out.println(record.getMessage());
+                return false;
             });
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
