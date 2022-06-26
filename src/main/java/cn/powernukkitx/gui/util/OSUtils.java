@@ -70,7 +70,7 @@ public final class OSUtils {
             try(var reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 var s = "";
                 while ((s = reader.readLine()) != null) {
-                    if (s.contains("0804")) {
+                    if (s.contains("0804 ")) {
                         return Locale.forLanguageTag("zh-cn");
                     } else if (s.contains("0409 ")) {
                         return Locale.forLanguageTag("en-us");
