@@ -7,10 +7,32 @@
     --darcula-font-color-select-background: rgb(75, 110, 175);
     --darcula-icon-color: rgb(175, 177, 179);
     --darcula-line-color: rgb(81, 81, 81);
+
+    --darcula-scrollbar-color-bg: rgba(84, 88, 89, 0.5);
+    --darcula-scrollbar-color-fg: rgba(175, 177, 179, 0.5);
+    --darcula-scrollbar-color-fg-selected: rgba(175, 177, 179, 0.9);
 }
 
 body {
-    background-color: white;
+    background-color: var(--darcula-bg-color);
+    margin: 0 0 0 0;
+}
+
+*::-webkit-scrollbar {
+    background-color: transparent;
+    width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--darcula-scrollbar-color-fg);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: var(--darcula-scrollbar-color-fg-selected);
+}
+
+*::-webkit-scrollbar:hover {
+    background-color: var(--darcula-scrollbar-color-bg);
 }
 
 hr {
@@ -21,6 +43,7 @@ hr {
 
 * {
     color: var(--darcula-font-color);
+    font-family: "Segoe UI", "Segoe UI Symbol", system-ui;
 }
 
 *::selection {
