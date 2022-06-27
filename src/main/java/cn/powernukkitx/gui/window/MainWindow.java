@@ -28,8 +28,6 @@ public final class MainWindow extends JFrame {
     private final CefBrowser browser;
     private boolean browserFocus = true;
 
-    private final LinkedHashMap<Integer, CefIndexPage> indexPageMap = new LinkedHashMap<>();
-
     public MainWindow(boolean useOSR, String[] args) throws UnsupportedPlatformException, CefInitializationException, IOException, InterruptedException {
         setTitle("PowerNukkitX");
         setIconImage(Toolkit.getDefaultToolkit().createImage(MainWindow.class.getClassLoader().getResource("image/pnx.png")));
