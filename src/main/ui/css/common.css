@@ -1,7 +1,3 @@
-/*图标库，国内访问可能很慢*/
-
-.ficomoon{font-family:'icomoon';-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
-.icon-search:before {content: "\e601"}
 
 :root {
     --darcula-bg-color: rgb(60, 63, 65);
