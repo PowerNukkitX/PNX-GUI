@@ -8,6 +8,7 @@ import me.friwi.jcefmaven.MavenCefAppHandlerAdapter;
 import me.friwi.jcefmaven.UnsupportedPlatformException;
 import org.cef.CefApp;
 import org.cef.CefClient;
+import org.cef.CefSettings;
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefMessageRouter;
 import org.cef.callback.CefSchemeRegistrar;
@@ -19,16 +20,21 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 
 public final class MainWindow extends JFrame {
     private final CefApp cefApp;
     private final CefClient client;
-    private final CefBrowser browser;
+    private final PageManager pageManager;
     private boolean browserFocus = true;
 
     public MainWindow(boolean useOSR, String[] args) throws UnsupportedPlatformException, CefInitializationException, IOException, InterruptedException {
+        if (args == null) {
+            args = new String[0];
+        }
+
+        pageManager = new PageManager();
+
         setTitle("PowerNukkitX");
         setIconImage(Toolkit.getDefaultToolkit().createImage(MainWindow.class.getClassLoader().getResource("image/pnx.png")));
 
@@ -36,6 +42,7 @@ public final class MainWindow extends JFrame {
         builder.getCefSettings().locale = Locale.getDefault().toLanguageTag().replace("_", "-");
         builder.getCefSettings().windowless_rendering_enabled = useOSR;
         builder.getCefSettings().cache_path = GUIConstant.cacheDir.getAbsolutePath();
+        builder.getCefSettings().background_color = builder.getCefSettings().new ColorType(255, 60, 63, 65);
         builder.setAppHandler(new MavenCefAppHandlerAdapter() {
             @Override
             public void stateHasChanged(org.cef.CefApp.CefAppState state) {
@@ -85,8 +92,8 @@ public final class MainWindow extends JFrame {
             }
         });
 
-        browser = client.createBrowser("pnx://bundle/html/index.html", false, true);
-        add(browser.getUIComponent());
+        pageManager.addPage(CefIndexPage.create("pnx://bundle/html/index.html", client));
+        add(pageManager.selectPage(0).browserUI());
         pack();
         setSize(800, 600);
         setVisible(true);
@@ -108,11 +115,11 @@ public final class MainWindow extends JFrame {
         return client;
     }
 
-    public CefBrowser getBrowser() {
-        return browser;
-    }
-
     public boolean isBrowserFocus() {
         return browserFocus;
+    }
+
+    public PageManager getPageManager() {
+        return pageManager;
     }
 }
