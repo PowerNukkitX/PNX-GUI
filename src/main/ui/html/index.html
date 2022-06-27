@@ -4,27 +4,17 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <script src="../libs/js/alpine.js"></script>
+    <script defer="defer" src="../libs/js/alpine.js"></script>
 </head>
 <body>
-<!--我不知道配色，所以谁知道配色谁给补一下-->
-
-    <h1>Hello PNX</h1>
-    <hr>
-    <p>欢迎使用PNX-GUI。</p>
-    <br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <h2>测试文字</h2>
-    <br><br><br><br>
-    <button type="button" class="button iconbutton common"></button>
-    <input type="checkbox" value="" />
-    <input type="input" value="" />
-    <div x-data="{
+<h1>Hello PNX</h1>
+<hr>
+<div x-data="{
         get time() {
             return String(new Date())
         }
     }">
-        <p>现在是：<span x-text="time"></span></p>
-    </div>
+    <p>现在是：<span x-text="time"></span></p>
+</div>
 </body>
 </html>
