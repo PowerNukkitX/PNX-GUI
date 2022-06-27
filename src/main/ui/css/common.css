@@ -2,12 +2,15 @@
     --darcula-bg-color: rgb(60, 63, 65);
     --darcula-font-color: rgb(175, 177, 179);
     --darcula-font-color-bright: white;
-    --darcula-icon-color: rgb(135, 147, 154);
+    --darcula-font-color-lightblue: rgb(104, 151, 187);
+    --darcula-font-color-hyperlink: rgb(0, 122, 204);
+    --darcula-font-color-select-background: rgb(75, 110, 175);
+    --darcula-icon-color: rgb(175, 177, 179);
     --darcula-line-color: rgb(81, 81, 81);
 }
 
 body {
-    background-color: var(--darcula-bg-color);
+    background-color: white;
 }
 
 hr {
@@ -18,4 +21,8 @@ hr {
 
 * {
     color: var(--darcula-font-color);
+}
+
+*::selection {
+    background-color: var(--darcula-font-color-select-background);
 }

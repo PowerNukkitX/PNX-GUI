@@ -3,11 +3,11 @@ package cn.powernukkitx.gui.window;
 import cn.powernukkitx.gui.util.ResourceUtils;
 import org.cef.CefClient;
 import org.cef.browser.CefBrowser;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -37,6 +37,8 @@ public final class CefIndexPage {
 
     public static CefIndexPage create(String url, CefClient cefClient) {
         var browser = cefClient.createBrowser(url, false, true);
+        var ui = browser.getUIComponent();
+        ui.setLocation(0, -20);
         return new CefIndexPage(globalIndexPageId.getAndIncrement(), browser, browser.getUIComponent());
     }
 
@@ -83,8 +85,9 @@ public final class CefIndexPage {
         return result;
     }
 
+    @Contract(pure = true)
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "CefIndexPage{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
