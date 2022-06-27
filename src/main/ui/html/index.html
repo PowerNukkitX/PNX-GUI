@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <script src="../libs/js/alpine.js"></script>
 </head>
 <body>
 <!--我不知道配色，所以谁知道配色谁给补一下-->
@@ -18,5 +19,12 @@
     <button type="button" class="button iconbutton common"></button>
     <input type="checkbox" value="" />
     <input type="input" value="" />
+    <div x-data="{
+        get time() {
+            return String(new Date())
+        }
+    }">
+        <p>现在是：<span x-text="time"></span></p>
+    </div>
 </body>
 </html>

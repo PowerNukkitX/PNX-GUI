@@ -4,29 +4,39 @@ import cn.powernukkitx.gui.Main;
 import cn.powernukkitx.gui.share.GUIConstant;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import org.jetbrains.annotations.Nullable;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Objects;
 
 public final class ResourceUtils {
     public static final File devSourceDir;
+    public static JSONObject routeConfig;
 
     static {
-        var resourceDir = new File(GUIConstant.userDir, "src/main/ui");
-        if (resourceDir.exists() && resourceDir.isDirectory()) {
-            devSourceDir = resourceDir;
-        } else {
-            resourceDir = new File(GUIConstant.userDir.getParentFile(), "src/main/ui");
+        {
+            var resourceDir = new File(GUIConstant.userDir, "src/main/ui");
             if (resourceDir.exists() && resourceDir.isDirectory()) {
                 devSourceDir = resourceDir;
             } else {
-                devSourceDir = null;
+                resourceDir = new File(GUIConstant.userDir.getParentFile(), "src/main/ui");
+                if (resourceDir.exists() && resourceDir.isDirectory()) {
+                    devSourceDir = resourceDir;
+                } else {
+                    devSourceDir = null;
+                }
+            }
+        }
+        {
+            try (var reader = new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("schemeRoute.json")))) {
+                routeConfig = (JSONObject) new JSONParser().parse(reader);
+            } catch (IOException | ParseException e) {
+                routeConfig = new JSONObject();
             }
         }
     }
@@ -36,6 +46,18 @@ public final class ResourceUtils {
     }
 
     public static @Nullable InputStream getResource(String name) {
+        if (routeConfig.containsKey(name)) {
+            var obj = routeConfig.get(name);
+            if (obj instanceof JSONObject jsonObject) {
+                if (Main.debug && jsonObject.containsKey("debug")) {
+                    name = jsonObject.get("debug").toString();
+                } else if (jsonObject.containsKey("default")) {
+                    name = jsonObject.get("default").toString();
+                }
+            } else if (obj instanceof String) {
+                name = obj.toString();
+            }
+        }
         if (devSourceDir != null) {
             System.out.println("Reading " + name + " from dev source.");
             var file = new File(devSourceDir, name);
