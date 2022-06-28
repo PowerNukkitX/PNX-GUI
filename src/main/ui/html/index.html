@@ -9,21 +9,30 @@
 <body>
 <h1>Hello PNX</h1>
 <hr>
-<div x-data="{
-        get time() {
-            return String(new Date())
-        }
-    }">
-    <p>现在是：<span x-text="time"></span></p>
+<div x-data>
+    <p>现在是：<span x-text="String($store.timerData.time)"></span></p>
 </div>
+<script>document.addEventListener('alpine:init', () => {
+    Alpine.store('timerData', {
+        time: new Date()
+    })
+    setInterval(() => {
+        Alpine.store('timerData', {
+            time: new Date()
+        })
+    }, 1000);
+})
+
+</script>
 <hr>
 <button>取消</button>
 <button class="highlight">确定</button>
+<button class="highlight strong">真的确定</button>
 <label>
-    <input type="checkbox" value="" />
+    <input type="checkbox" value=""/>
 </label>
 <label>
-    <input value="" />
+    <input value=""/>
 </label>
 </body>
 </html>

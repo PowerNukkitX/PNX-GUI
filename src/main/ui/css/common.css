@@ -75,6 +75,10 @@ button.highlight {
     background-color: var(--darcula-btn-color-bg-highlight);
 }
 
+button.strong {
+    font-weight: bold;
+}
+
 button:active {
     border-color: var(--darcula-btn-color-shade);
     box-shadow: 0 0 0 2px var(--darcula-btn-color-shade);
