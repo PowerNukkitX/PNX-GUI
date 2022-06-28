@@ -18,6 +18,10 @@
     --darcula-btn-color-shade: rgb(61, 97, 133);
     --darcula-btn-color-bg-highlight: rgb(54, 88, 128);
     --darchla-btn-color-border-highlight: rgb(76, 112, 140);
+
+    --darcula-input-color-border: rgb(94, 96, 96);
+    --darcula-input-color-bg: rgb(69, 73, 74);
+    --darcula-input-color-shade: rgb(61, 97, 133);
 }
 
 body {
@@ -82,4 +86,45 @@ button.strong {
 button:active {
     border-color: var(--darcula-btn-color-shade);
     box-shadow: 0 0 0 2px var(--darcula-btn-color-shade);
+}
+
+input {
+    background-color: var(--darcula-input-color-bg);
+    border: var(--darcula-input-color-border) solid 1px;
+    border-radius: 2px;
+    padding: 2px 4px 2px 4px;
+    min-height: 18px;
+    font-size: 12px;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--darcula-input-color-shade);
+    box-shadow: 0 0 0 2px var(--darcula-input-color-shade);
+}
+
+/*noinspection CssUnknownTarget*/
+input[type=search] {
+    background-image: url("pnx://bundle/image/search.svg");
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-position-y: center;
+    background-position-x: 6px;
+    text-indent: 20px;
+}
+
+input[type=checkbox] {
+    width: 16px;
+    height: 14px;
+    vertical-align: middle;
+    appearance: inherit;
+}
+
+input[type=checkbox]:checked:before {
+    content: "∟";
+    transform: rotate(225deg) translateX(2px) translateY(6px) scaleY(-1);
+    font-weight: bolder;
+    display: block;
+    overflow: hidden;
+    font-size: 16px;
 }
